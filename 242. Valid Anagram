@@ -1,0 +1,19 @@
+
+self solution：
+
+class Solution:
+    def isAnagram(self,s: str, t: str) -> bool:
+        if len(s)!=len(t):
+            return False
+        for i in s:
+            if i in t:
+                if s.count(i) == t.count(i):
+                    continue
+                else:
+                    return False
+            else:
+                return False
+
+        return True
+       
+Problem:The time usage is too much.
