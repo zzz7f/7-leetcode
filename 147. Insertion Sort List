@@ -1,0 +1,26 @@
+It's about insertion sort. Everytime find a val that is smaller that the front node, scan from head to insert the smaller node.
+
+My problem:
+lack of using List. I know the steps but not sure how to write it.
+
+C++ Solution:
+ListNode* insertionSortList(ListNode* head) {
+        ListNode* dummy = new ListNode(0);
+        dummy -> next = head;
+        ListNode *pre = dummy, *cur = head;
+        while (cur) {
+            if ((cur -> next) && (cur -> next -> val < cur -> val)) {
+                while ((pre -> next) && (pre -> next -> val < cur -> next -> val)) {
+                    pre = pre -> next;
+                }
+                ListNode* temp = pre -> next;
+                pre -> next = cur -> next;
+                cur -> next = cur -> next -> next;
+                pre -> next -> next = temp;
+                pre = dummy;
+            }
+            else {
+                cur = cur -> next;
+            }
+        }
+        return dummy -> next;
