@@ -42,3 +42,21 @@ class Solution {
         return re;
     }
 }
+
+2.其他解法：
+#  采用哈希表：Hashmap：key-value.Keys and values in a HashMap are actually objects. A String in Java is an object (not a primitive type)
+public int[] twoSum(int[] numbers, int target) {
+    int[] result = new int[2];
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    for (int i = 0; i < numbers.length; i++) {
+        if (map.containsKey(target - numbers[i])) #  查找map中是否存在目标减去当前值的键值，若存在则返回，若不存在则往表中放入该值
+        {
+            result[1] = i;
+            result[0] = map.get(target - numbers[i]);
+            return result;
+        }
+        map.put(numbers[i], i);
+    }
+    return result;
+}
+
