@@ -1,1 +1,44 @@
 #  01-TWO SUM
+1. 自写JAVA代码
+#  思路：对复制的数组进行排序，构建左坐标和右坐标，左坐标为0，右坐标为长度-1。
+开始循环查找，左坐标对应值+右坐标对应值小于目标，则左加一，大于目标则右加一，相等或没找到则跳出循环。再将复制的数组坐标还原到原数组中。
+#  使用的JAVA内置函数：
+   Arrays.copyOf() 进行（多种类型）数组的复制；Arrays.sort() 排序，默认从小到大。
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] n = Arrays.copyOf(nums,nums.length);        
+        int i,lef,rig;
+        int[] re = new int[2];
+        lef = 0;
+        rig = nums.length - 1;
+        Arrays.sort(n);
+        for (i = 0 ;i < nums.length; i++)   #  循环查找，左坐标对应值+右坐标对应值小于目标，则左加一，大于目标则右加一
+        {
+            if(n[lef] + n[rig] < target)
+                lef++;
+            else if(n[lef] + n[rig] > target)
+                rig--;
+            else
+                break;
+        }
+        for (i = 0 ;i < nums.length; i++)  #  还原对应左坐标
+        {
+            if(n[lef] == nums[i])
+            {   
+                lef = i;
+                break;
+            }
+        }
+        for (i = nums.length - 1 ;i >= 0 ; i--)  #  还原对应右坐标
+        {
+            if(n[rig] == nums[i])
+            {
+                rig = i;
+                break;
+            }
+        }
+        re[0] = lef;
+        re[1] = rig;
+        return re;
+    }
+}
