@@ -1,0 +1,46 @@
+#  02 Add Two Numbers：
+#  reverse order: 逆序
+1.  自写C++代码：
+#  Runtime: 28 ms, faster than 92.88% of C++ online submissions for Add Two Numbers.
+   Memory Usage: 71.4 MB, less than 81.87% of C++ online submissions for Add Two Numbers.
+#  思路：Create a ListNode pointer re and curr(for saving the start of re pointer). 
+         While one of l1 and l2 exists, go into the loop. If l1 exists, add the value of l1 to re->val. Same to l2.
+         If the value of re is greater than 10, which means we need carry one to the next node, then create a new node which val equals to 1. 
+         If not, the value of next node of re is 0. End of the loop.
+#  参考部分：如何移动链表，如何创建链表的结点，如何保存链表的开头。
+class Solution {
+public:
+	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+        ListNode * re = new ListNode();
+        ListNode *curr = re; #  如何保存链表的开头
+        while (l1 || l2)
+        {
+            if (l1)
+            {
+                re->val += l1->val;
+                l1 = l1->next;
+            }
+            if (l2)
+            {
+                re->val += l2->val;
+                l2 = l2->next;
+            }
+            if (re->val >= 10)
+            {
+                ListNode *node = new ListNode(1);
+                re->next = node;
+                re->val -= 10;
+            }
+            else
+            {
+                if (l1 || l2)
+                {
+                    ListNode *node = new ListNode();
+                    re->next = node;
+                }
+            }
+            re = re->next;
+        }
+        return curr;
+    }
+};
