@@ -1,0 +1,55 @@
+# 03.Longest Substring Without Repeating Characters
+# 滑窗问题；Minimum Size Subarray Sum；Minimum Window Substring
+1. 自写C++代码
+#  Runtime: 1753 ms, faster than 5.02% of C++ online submissions for Longest Substring Without Repeating Characters.
+   Memory Usage: 259.8 MB, less than 5.04% of C++ online submissions for Longest Substring Without Repeating Characters.
+#  思路：最暴力的解法，逐个遍历，找到相同的则跳出循环存储遍历次数，最后比较次数大小，但是空间时间都很悬。尝试了使用Map，但其实没用太对……。
+#  参考部分：Map语法。
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        string trans;
+        std::map<char, int> mapRe;  // map构造语法
+        int re = 0;
+        int rfind = 0;
+        int len = s.length();
+        for(int i = 0;i<len - re;i++)
+        {
+            while (i+rfind<len)
+            {
+                if (mapRe.find(s[i + rfind]) == mapRe.end())  //  没找到,即未重复。map查找语法
+                {
+                    mapRe.insert(pair<char, int>(s[i + rfind], i + rfind));  // map插入语法
+                    rfind++;
+                }
+                else
+                    break;
+            }
+            if (rfind > re)
+            {
+                re = rfind;
+            }
+            mapRe.clear();  // map清空语法
+            rfind = 0;
+        }
+        return re;
+    }
+};
+
+2. 其他解法：
+#  思路：采用了ASCII码，只有256个可输入值故构建一个长度256的vector,设定每个值的初始为-1（即不存在）。构建词典后，保存每次词出现时的位置，若出现重复则对重复位置索引start
+进行修改，最后对比当前最长值和遍历点减去重复位置的长度，取较长。
+int lengthOfLongestSubstring(string s) {
+        vector<int> dict(256, -1);
+        int maxLen = 0, start = -1;
+        for (int i = 0; i != s.length(); i++) {
+            if (dict[s[i]] > start)  // 查找s[i]的值是否大于start（即是否有出现过）
+                start = dict[s[i]];  // start即为s[i]重复的位置，因为该位置出现过重复，故start坐标前面的子集长度不可能再增长，此时只需要考虑继续向后查找即可
+            dict[s[i]] = i;  //  i代表该s[i]对应的字符最后出现的位置
+            maxLen = max(maxLen, i - start);
+        }
+        return maxLen;
+    }
+    
+3.  根据其他解法进行一番修改：
+（施工中）
