@@ -1,0 +1,20 @@
+# 26. Remove Duplicates from Sorted Array
+1. 自写Python代码
+#  Runtime: 168 ms, faster than 16.07% of Python online submissions for Remove Duplicates from Sorted Array.
+   Memory Usage: 14.6 MB, less than 79.72% of Python online submissions for Remove Duplicates from Sorted Array.
+#  思路：判断该数是否和后面的数相等，是就删掉后面的数，总长减一，不是i就后移一位，继续判断。空间利用率低但是时间较长，可以考虑其他语言解法。
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 0
+        l = len(nums)
+        while (i < l - 1):
+            if(nums[i] == nums[i+1]):
+                del nums[i+1]
+                l-=1
+            else:
+                i+=1
+        return l
