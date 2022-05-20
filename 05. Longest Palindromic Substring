@@ -1,0 +1,24 @@
+# 05. Longest Palindromic Substring
+#  不会动态规划TT
+1. 其他JAVA解法：
+#  思路：以第一个位置为起点开始，遍历奇数偶数两种可能的所有长度，并取其长。（其实就是暴力解法，我在抱头胡乱追求什么）
+class Solution {
+    public String longestPalindrome(String s) {
+        String max = "";
+        for (int i = 0; i < s.length(); i++) { // 从第一个为起点开始算
+            String s1 = extend(s, i, i), s2 = extend(s, i, i + 1); // 对于奇数和偶数长度两种形式，都进行判断
+            if (s1.length() > max.length()) max = s1;
+            if (s2.length() > max.length()) max = s2; // 两者之间选一个大的
+        }
+        return max;
+    }
+    
+    private String extend(String s, int i, int j) {
+        while( 0 <= i && j < s.length()) {
+            if (s.charAt(i) != s.charAt(j)) break; // 从长到短判断各个长度
+            i--;
+            j++;
+        }
+        return s.substring(i + 1, j);
+    }
+}
