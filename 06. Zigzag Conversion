@@ -1,0 +1,40 @@
+#  06. Zigzag Conversion
+#  找规律
+1. 自写C++解法
+#  Runtime: 7 ms, faster than 91.19% of C++ online submissions for Zigzag Conversion.
+   Memory Usage: 8.3 MB, less than 77.10% of C++ online submissions for Zigzag Conversion.
+#  思路：找规律。总行数为N,设一个循环为：2N-2,层数为L。
+   第一层和最后一层的任意两个字母间的索引差值为一个循环，其他层的地址规律为：第奇数个[个数/2*循环+层数]，第偶数个[个数/2*循环9层数]，不断增加索引，直到超过给出的字符串总长度。
+   根据如上规律写代码进行判断。特别注意，当仅有一行时直接返回。（特殊情况，上述代码无法处理）
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if (numRows == 1)
+		    return s;
+        int circle = 2 * numRows - 2;
+        int len = s.length();
+        string re;
+        for (int i = 0; i < numRows; i++) // 循环每一层
+        {
+            int index = i;
+            int count = 1;
+            while (index < len) // 超过字符串长度则进入下一层
+            {
+                re += s[index];
+                count++;
+                if (i == 0 || i == numRows - 1) // 第一层或者最后一层直接加circle
+                {
+                    index += circle;
+                }
+                else
+                {
+                    if (count % 2 == 0) // 第偶数个
+                        index = count / 2 * circle - i;
+                    else // 第奇数个
+                        index = count / 2 * circle + i;
+                }
+            }
+        }
+        return re;
+    }
+};
