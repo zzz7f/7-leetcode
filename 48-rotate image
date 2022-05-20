@@ -1,1 +1,23 @@
 #  48-Rotate Image
+1. 自写Python代码
+#  Runtime: 47 ms, faster than 6.86% of Python online submissions for Rotate Image.
+   Memory Usage: 13.3 MB, less than 70.54% of Python online submissions for Rotate Image.
+#  思路：硬找规律，进行一番数字代换。费劲不说，时间还很长。看看别人怎么说。
+class Solution(object):
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix)
+        l = 0
+        while l <= n / 2 :
+            j = l
+            while j < n- l - 1:
+                t = matrix[j][n-1-l]
+                matrix[j][n-1-l] = matrix[l][j]
+                matrix[l][j] = matrix[n-j-1][l]
+                matrix[n-j-1][l] = matrix[n-1-l][n-j-1]
+                matrix[n-1-l][n-j-1] = t
+                j+=1
+            l+=1
